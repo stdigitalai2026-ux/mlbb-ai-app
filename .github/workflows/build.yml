@@ -9,13 +9,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Extract ZIP & Prepare
+      - name: Extract ZIP Properly
         run: |
           if [ -f "mlbb-ai.zip" ]; then
-            unzip -o mlbb-ai.zip
+            unzip -o mlbb-ai.zip -d temp_folder
+            cp -r temp_folder/* ./
+            rm -rf temp_folder
           fi
-          # Bypass KSP IDE ApplicationManager error
-          export KSP_DISABLE_IDE_FEATURES=true
+          ls -la
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
